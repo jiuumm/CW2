@@ -1,24 +1,24 @@
 from collections import deque
 
-def solution(bridge_length, weight, truck_weights):
-  answer = 0                                                          #트럭이 다리를 지나는 총시간
-  q = deque()                                                         #지나가는 중인 트럭
-  res = deque(truck_weights)                                          #대기중인 트럭 덱으로 변환
+n, k = map(int, input().split())
 
-  while res or q:
-    answer += 1
+def josephus_q(n, k):
+    res = []
+    q = deque()
+    for i in range(n):
+        q.append(i+1)
+    while q:                                            # 큐가 비어있지 않은 동안 반복
+        for _ in range(k - 1):
+            q.append(q.popleft())                       # k - 1 번째 원소까지는 빼고 다시 큐에 넣음
+        res.append(q.popleft())                         # k 번째 원소를 결과에 추가
+    result_str = '<' + ', '.join(map(str, res)) + '>'   # ".join(리스트) : 리스트의 각 원소를 문자열로 합쳐서 반환" / "(구분자).join(리스트) : 리스트의 원소 사이에 '구분자'를 넣어서 하나의 문자열로 합쳐줌"
+    return result_str
 
-    if q:                                                             # 여기서 q는 deque 이며 각 원소는 튜플. 첫번째 원소는 트럭의 무게, 두번째 원소는 해당트럭이 다리위에 있는 시간
-      if q[0][1] == bridge_length:                                    # 다리지난 트럭
-        q.popleft()
-    
-    if res:                                           
-      if sum([truck[0] for truck in q] + res[0]) <= weight:           # 다음 트럭이 다리에 올라갈 수 있는가
-                                                                      # 여기서 sum()함수를 통해 q에 있는 트럭들의 무게를 더해서 int형으로 변환하여 나타냄
-        truck = res.popleft()
-        q.append((truck, 0))                                          # 여기서 괄호를 한번 더 해주는 이유: append()함수는 인자가 1개 뿐이므로 이를 튜플로 입력받아야하기 때문
 
-    for i in range(len(q)):
-      q[i] = (q[i][0], q[i][1]+1)                                     #다리를 건너는 중인 트럭의 경과시간 증가시킴
+result = josephus_q(n, k)
+print(result)
 
-  return answer
+
+
+# queue.Queue는 리스트를 기반으로 구현된 큐 -> 리스트를 내부적으로 사용하여 큐의 동작을 시뮬레이트함
+# ---> 리스트 내에서 요소를 이동해야 한다. 특히 긴 리스트의 앞부분에서 요소를 제거해야 하는 경우에는 효율적이지 않을 수 있습니다.
