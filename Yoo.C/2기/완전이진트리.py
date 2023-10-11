@@ -12,7 +12,7 @@ def dfs(lst, l):
     if len(lst)==1:
         return
     dfs(lst[:mid], l+1)
-    dfs(lst[mid+1:l+1])
+    dfs(lst[mid+1:],l+1)
     
 dfs(lst,0)
 
