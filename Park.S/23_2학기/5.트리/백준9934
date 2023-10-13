@@ -1,0 +1,36 @@
+#231013(FRI) / 완전이진트리 / 실버1
+''' 문제 이해
+우선순위 
+1. 왼쪽의.. 왼쪽 자식노드(가장 아래 자식)
+2. 바로 위 부모노드
+3. 2의 오른쪽 자식노드
+4. 2의 부모노드 진출 (가장 크게 봤을 때 왼쪽 반 전부 반복)
+5. 오른쪽 반도 똑같이 '왼자식-부모-오른자식-윗부모로 진출' 반복
+'''
+# 중위순회가 방문순서임
+# >> 중위순회를 반대로 실행
+
+k = int(input())
+cmd = list(map(int, input().split()))
+
+# 이진 검색 트리의 각 레벨에 속하는 노드를 저장할 리스트를 초기화
+answer = [[] for _ in range(k)]
+
+# 중위 순회를 역순으로 반대로 변경하는 함수
+def reverse(cmd_index, start, end, depth):
+    if start <= end:
+        mid = (start + end) // 2
+        # 현재 중간 노드를 해당 레벨에 추가
+        answer[depth].append(cmd[mid])
+        # 왼쪽 서브트리 처리
+        reverse(cmd_index, start, mid - 1, depth + 1)
+        # 오른쪽 서브트리 처리
+        reverse(cmd_index + mid - start + 1, mid + 1, end, depth + 1)
+
+# 루트 노드(첫 번째 노드)부터 시작
+reverse(0, 0, len(cmd) - 1, 0)
+
+for i in answer:
+    print(*i)
+
+
