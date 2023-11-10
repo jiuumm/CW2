@@ -7,7 +7,6 @@ def dfs(n, cnt):
         print(cnt)
         return
 
-    
     if n%k==0:
         cnt+=1
         dfs(n//k, cnt)
