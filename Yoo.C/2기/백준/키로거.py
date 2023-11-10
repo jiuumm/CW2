@@ -14,9 +14,9 @@ for _ in range(t):
             if left:
                 left.pop()
         else:
-    
-    #Ã³À½¿¡ ±×³É rightÀ» ´õÇß´õ´Ï Æ²·È¾ú´Ù.
             left.append(i)
+    #ì²˜ìŒì— ê·¸ëƒ¥ rightì„ ë”í–ˆë”ë‹ˆ í‹€ë ¸ì—ˆë‹¤.
+    
     answer =left+right[::-1]
     for i in answer:
         print(i, end="")
