@@ -1,4 +1,5 @@
-#from collections import deque
+import sys
+input = sys.stdin.readline
 n, k= map(int, input().split())
 wheel = [0]*n
 cnt=-1
@@ -10,9 +11,6 @@ for i in range(k):
     cnt+=s
     if cnt>=n:
         cnt-=n
-    if cnt==-1:
-        flag2 = False
-        break
   
     if wheel[cnt] == 0 or wheel[cnt]==letter:
         wheel[cnt]= letter
